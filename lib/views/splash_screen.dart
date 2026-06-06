@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   final Color primaryPink = const Color(0xFFEC407A);
   final Color backgroundColor = const Color.fromARGB(255, 237, 237, 243);  
   final Color textSecondary = const Color(0xFF6B7280);
-
+//_HomeScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
