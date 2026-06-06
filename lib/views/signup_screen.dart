@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
     final String password = _passwordController.text.trim();
     final String confirmPassword = _confirmPasswordController.text.trim();
     
-    // Username validation
+    
     if (username.isEmpty) {
       setState(() => _usernameError = "Please enter username");
       return;
@@ -93,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
     
-    // Email validation
+    
     if (email.isEmpty) {
       setState(() => _emailError = "Please enter email");
       return;
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
     
-    // Password validation
+    
     if (password.isEmpty) {
       setState(() => _passwordError = "Please enter password");
       return;
@@ -130,7 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
     
-    // Confirm password validation
+   
     if (confirmPassword.isEmpty) {
       setState(() => _confirmPasswordError = "Please confirm password");
       return;
