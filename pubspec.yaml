@@ -1,0 +1,60 @@
+name: smart_finsight
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase (UPDATED COMPATIBLE)
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.3
+  cloud_firestore: ^5.6.12 
+  firebase_storage: ^12.3.0 
+
+  google_fonts: ^6.1.0
+  lottie: ^2.7.0
+  flutter_native_splash: ^2.3.8
+  
+  provider: ^6.1.1
+
+  google_sign_in: ^5.4.4
+  
+  # UI Packages
+  image_picker: ^1.0.5
+  intl: ^0.18.1
+  fl_chart: ^0.66.0
+  speech_to_text: ^7.0.0
+  table_calendar: ^3.0.9 
+
+
+   # Email sending
+  http: ^1.1.0
+  flutter_dotenv: ^6.0.1
+
+  # Other Utilities
+  shared_preferences: ^2.2.2
+  url_launcher: ^6.2.1
+  
+  # The following adds the Cupertino Icons font to your application.
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+# FLUTTER SECTION - SIRF EK BAAR
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - .env
+
+   

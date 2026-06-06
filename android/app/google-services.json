@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "351331152013",
+    "project_id": "smart-finsight",
+    "storage_bucket": "smart-finsight.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351331152013:android:2fbedc02620f3ea3e1b2c4",
+        "android_client_info": {
+          "package_name": "com.example.smart_finsight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351331152013-dida5aa6er9vcvdl7t142kl9fn554fae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_finsight",
+            "certificate_hash": "4348ef7465057f571b10af9186c77d199c51342f"
+          }
+        },
+        {
+          "client_id": "351331152013-piu4rej1ht6dnnu2204t5r7fn5e4tfb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMP1ACcAZ8lxzKQp1D4N3fp1w4HIwcpwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351331152013-piu4rej1ht6dnnu2204t5r7fn5e4tfb4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "351331152013-5oggn1b83ghaa2csn68u31p400m02vcg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartFinsight"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
