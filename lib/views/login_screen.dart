@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../controllers/auth_controller.dart';  // 👈 SIRF YEH IMPORT ADD HOGA
+import '../controllers/auth_controller.dart';  
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthController _authController = AuthController();  // 👈 YEH ADD HOGA
+  final AuthController _authController = AuthController();  
   
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     
-    // Email format validation - must be @gmail.com
+    // Email format validation 
     if (!email.endsWith('@gmail.com')) {
       setState(() => emailError = "Email must be @gmail.com format");
       return;
@@ -76,7 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => isLoading = true);
 
     try {
-      // 👇 YEH LINE CHANGE HOGI (Controller use karega)
       await _authController.signInWithEmail(email, password);
       
       if (!mounted) return;
