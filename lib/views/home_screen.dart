@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:intl/intl.dart';
 import '../controllers/auth_controller.dart';
@@ -10,20 +11,26 @@ import 'add_expense_screen.dart';
 import 'transactions_screen.dart';
 
 
+
+
 // ignore_for_file: use_build_context_synchronously
+
+
 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = AuthController();
   final TransactionController _transactionController = TransactionController();
-  
+ 
   int _selectedIndex = 0;
   int _selectedActionCard = 0;
   double _totalBalance = 0;
@@ -33,13 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final stt.SpeechToText _speech = stt.SpeechToText();
   String _voiceText = "Tap to start recording Voice to Transaction";
 
+
   @override
   void initState() {
     super.initState();
     _initSpeech();
     _listenToTransactions();
   }
-  
+ 
   void _initSpeech() async {
     await _speech.initialize(
       onStatus: (status) {},
@@ -53,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-  
+ 
   void _startListening() async {
     bool available = await _speech.initialize();
     if (available) {
@@ -81,14 +89,14 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
   }
-  
+ 
   void _processVoiceTransaction(String text) {
     String lowerText = text.toLowerCase();
-    
+   
     RegExp amountRegex = RegExp(r'(\d+(?:\.\d+)?)');
     Match? amountMatch = amountRegex.firstMatch(lowerText);
     double? amount = amountMatch != null ? double.tryParse(amountMatch.group(1)!) : null;
-    
+   
     if (lowerText.contains('income') || lowerText.contains('received')) {
       if (amount != null) {
         Navigator.push(
@@ -114,14 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
   }
-  
+ 
   void _listenToTransactions() {
     if (_authController.currentUserId == null) return;
-    
+   
     _transactionController.getTransactions(_authController.currentUserId!).listen((transactions) {
       final income = _transactionController.calculateTotalIncome(transactions);
       final expense = _transactionController.calculateTotalExpense(transactions);
-      
+     
       if (mounted) {
         setState(() {
           _totalIncome = income;
@@ -132,6 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
   Future<void> _addTransaction({
     required double amount,
     required String category,
@@ -140,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required DateTime date,
   }) async {
     if (_authController.currentUserId == null) return;
-    
+   
     final transaction = TransactionModel(
       userId: _authController.currentUserId!,
       amount: amount,
@@ -150,16 +159,17 @@ class _HomeScreenState extends State<HomeScreen> {
       date: date,
       createdAt: DateTime.now(),
     );
-    
+   
     await _transactionController.addTransaction(transaction);
   }
+
 
   void _showAddExpenseDialog() {
     final TextEditingController amountController = TextEditingController();
     final TextEditingController categoryController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
     DateTime selectedDate = DateTime.now();
-    
+   
     showDialog(
       context: context,
       builder: (dialogContext) {
@@ -277,6 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
 
   @override
 Widget build(BuildContext context) {
@@ -521,6 +532,7 @@ Widget build(BuildContext context) {
                         );
                       }
 
+
                       if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -528,7 +540,9 @@ Widget build(BuildContext context) {
                         );
                       }
 
+
                       final transactions = snapshot.data!;
+
 
                       return ListView.builder(
                         shrinkWrap: true,
@@ -538,6 +552,7 @@ Widget build(BuildContext context) {
                         itemBuilder: (context, index) {
                           final t = transactions[index];
                           final isIncome = t.type == 'income';
+
 
                           return Container(
                             margin: const EdgeInsets.only(bottom: 12),
@@ -607,10 +622,10 @@ Widget build(BuildContext context) {
                     },
                   ),
             const SizedBox(height: 20),
-          ], 
-        ), 
-      ), 
-    ), 
+          ],
+        ),
+      ),
+    ),
     bottomNavigationBar: BottomNavigationBar(
       currentIndex: _selectedIndex,
       onTap: (index) {
@@ -631,8 +646,9 @@ Widget build(BuildContext context) {
         BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'Settings'),
       ],
     ),
-  ); 
+  );
 }
+
 
   Widget _buildActionCard({
     required int index,
@@ -655,8 +671,8 @@ Widget build(BuildContext context) {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04), 
-                blurRadius: 10, 
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
             ],
@@ -677,6 +693,7 @@ Widget build(BuildContext context) {
       ),
     );
   }
+
 
   void _showCalendarDialog() {
     showDialog(
@@ -709,6 +726,7 @@ Widget build(BuildContext context) {
       },
     );
   }
+
 
   void _showMenuDialog() {
     showDialog(
@@ -752,8 +770,10 @@ Widget build(BuildContext context) {
   }
 }
 
+
 class _EmptyTransactionBox extends StatelessWidget {
   const _EmptyTransactionBox();
+
 
   @override
   Widget build(BuildContext context) {
@@ -763,7 +783,7 @@ class _EmptyTransactionBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.grey.shade300, style: BorderStyle.solid), 
+        border: Border.all(color: Colors.grey.shade300, style: BorderStyle.solid),
       ),
       child: const Center(
         child: Text(
@@ -775,3 +795,4 @@ class _EmptyTransactionBox extends StatelessWidget {
     );
   }
 }
+

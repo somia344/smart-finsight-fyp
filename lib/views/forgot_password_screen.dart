@@ -74,7 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               children: [
                 const SizedBox(height: 40),
                 
-                // Smart FinSight Logo
+                
                 const Text(
                   'Smart FinSight',
                   style: TextStyle(
@@ -94,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 
                 const SizedBox(height: 80),
                 
-                // White Card
+                
                 if (_emailSent) ...[
                   Container(
                     padding: const EdgeInsets.all(20),
@@ -195,7 +195,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         const SizedBox(height: 32),
                         
-                        // Email Field
+                       
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -243,7 +243,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         
                         const SizedBox(height: 32),
                         
-                        // Send Reset Link Button
+                        
                         SizedBox(
                           width: double.infinity,
                           height: 50,
@@ -270,8 +270,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         
                         const SizedBox(height: 20),
-                        
-                        // Back to Login with arrow
+                       
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
