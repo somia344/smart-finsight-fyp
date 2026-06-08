@@ -495,7 +495,7 @@ class _HomeScreenState extends State<HomeScreen> {
               
               const SizedBox(height: 12),
               
-              // Recent Transactions List - WITHOUT ICONS, WITH GREEN/RED COLORS
+              
               _authController.currentUserId == null
                   ? const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -606,11 +606,11 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (index) {
           setState(() => _selectedIndex = index);
           if (index == 1) {
-            // Insights page - will implement later
+            
           } else if (index == 2) {
-            // Budget page - will implement later
+          
           } else if (index == 3) {
-            // Profile/Settings page - will implement later
+           
           }
         },
         type: BottomNavigationBarType.fixed,
