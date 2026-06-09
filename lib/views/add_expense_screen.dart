@@ -31,28 +31,27 @@ final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStora
   String? get _currentUserId => _auth.currentUser?.uid;
   
   
-  // Current balance from Firebase
   double _currentBalance = 0.0;
   bool _isLoading = false;
 
-  // Reminder variables
+  
 DateTime? _selectedReminderDate;
 bool _isRecurring = false;
 String _reminderText = ''; 
 
-  // Date & Time variables
+  
 DateTime _selectedDate = DateTime.now();
 TimeOfDay _selectedTime = TimeOfDay.now();
 String _selectedTimeOfDay = '';
 
-  // Bills images list
+
   List<File> _billImages = [];
   
-// Add Items variables
+
 List<Map<String, dynamic>> _itemsList = [];
 double _itemsTotalAmount = 0.0;
 
-  // Payment method variables
+
 
    String _selectedPaymentMethod = 'Cash';
   double _selectedPaymentMethodBalance = 0.0;
@@ -66,7 +65,7 @@ double _itemsTotalAmount = 0.0;
   ];
   String _searchPaymentQuery = '';
 
-   // Category variables
+  
   String _selectedCategory = 'food';
   IconData _selectedCategoryIcon = Icons.category;
   List<Map<String, dynamic>> _categories = [
@@ -79,7 +78,7 @@ double _itemsTotalAmount = 0.0;
   ];
   
 
-  // Colors ab AppColors se le rahe hain
+  
   final Color primaryBg = AppColors.background;  
   final Color appBarColor = const Color(0xFF141E27);
   final Color saveButtonColor = AppColors.primaryPink;  
@@ -110,7 +109,7 @@ double _itemsTotalAmount = 0.0;
     super.dispose();
   }
 
-// Upload images to Firebase Storage
+
 Future<List<String>> _uploadBillImages() async {
     List<String> imageUrls = [];
     
@@ -128,7 +127,7 @@ Future<List<String>> _uploadBillImages() async {
     
     return imageUrls;
   }
-// Add Item
+
 void _showItemsDialog() {
   final TextEditingController itemController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
@@ -155,7 +154,7 @@ void _showItemsDialog() {
                     const Text('Add Items', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 20),
                     
-                    // Item Name
+                    
                     TextField(
                       controller: itemController,
                       decoration: const InputDecoration(
@@ -165,7 +164,7 @@ void _showItemsDialog() {
                     ),
                     const SizedBox(height: 16),
                     
-                    // Quantity, Unit, Rate Row
+                  
                     Row(
                       children: [
                         Expanded(
@@ -194,7 +193,7 @@ void _showItemsDialog() {
                     ),
                     const SizedBox(height: 16),
                     
-                    // ADD Button
+           
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
@@ -245,7 +244,7 @@ void _showItemsDialog() {
                       ),
                     ),
                     
-                    // 🌟 CHANGING 1: Agar items empty hain to spacing aur box dono gayab ho jayenge
+                    
                     if (_itemsList.isNotEmpty) ...[
                       const SizedBox(height: 20),
                       Container(
@@ -328,11 +327,11 @@ void _showItemsDialog() {
                     
                     const SizedBox(height: 20),
                     
-                    // Buttons Row
+                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // 🌟 CHANGING 2: CLEAR ALL BUTTON KO PERMANENTLY REMOVE KAR DIYA
+                       
                         TextButton(
                           onPressed: () => Navigator.pop(dialogContext),
                           child: const Text('CANCEL', style: TextStyle(color: Color(0xFFEC407A))),
@@ -362,7 +361,7 @@ void _showItemsDialog() {
   );
 }
 
-// Helper Functions for formatting
+
 String _formatAmount(double amount) {
   if (amount == amount.toInt()) {
     return amount.toInt().toString();
@@ -385,7 +384,7 @@ String _formatTimeOfDay(TimeOfDay time) {
   return DateFormat('hh:mm a').format(dt);
 }
 
- // Add Bills Dialog
+
   void _showAddBillsDialog() {
     showModalBottomSheet(
       context: context,
@@ -518,7 +517,7 @@ String _formatTimeOfDay(TimeOfDay time) {
     }
   }
 
-// Recurring
+
 
 Future<void> _selectReminderDate() async {
   final DateTime? picked = await showDatePicker(
@@ -586,7 +585,7 @@ Future<void> _selectReminderDate() async {
   }
 }
 
- // YAHAN CHANGE 5: Pick Image from Camera
+ //  Pick Image from Camera
   void _showBillImagesPreview() {
     showModalBottomSheet(
       context: context,
@@ -837,11 +836,14 @@ Future<void> _selectReminderDate() async {
   }
 
   void _showSnackBar(String msg, [Color? color]) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(msg), 
         backgroundColor: color ?? const Color(0xFFEC407A),
         duration: const Duration(seconds: 2),
+         behavior: SnackBarBehavior.floating, 
+         margin: const EdgeInsets.all(16),
       ),
     );
   }
@@ -913,59 +915,79 @@ Future<void> _selectTime() async {
   final TimeOfDay? picked = await showTimePicker(
     context: context,
     initialTime: TimeOfDay.now(),
-    initialEntryMode: TimePickerEntryMode.dialOnly,
-    helpText: '',
-    builder: (context, child) {
+    initialEntryMode: TimePickerEntryMode.dial,
+    builder: (BuildContext context, Widget? child) {
       return Theme(
-        data: ThemeData.light(useMaterial3: false).copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: Color(0xFFEC407A),       // Header background pink
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Color(0xFF141E27),
-          ),
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
+        data: ThemeData(
+          useMaterial3: false, 
+          primaryColor: const Color(0xFFEC407A), 
+          scaffoldBackgroundColor: Colors.white,
           
+          colorScheme: const ColorScheme.light(
+            primary: Color(0xFFEC407A),   
+            onPrimary: Colors.white,       
+            surface: Colors.white,         
+            onSurface: Color(0xFF141E27),  
+            secondary: Color(0xFFEC407A),  
+          ),
+          
+          // Time Picker Layout Customization
           timePickerTheme: TimePickerThemeData(
             backgroundColor: Colors.white,
-            dialHandColor: const Color(0xFFEC407A),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            dialHandColor: const Color(0xFFEC407A), 
             dialBackgroundColor: const Color(0xFFF3F4F6),
             dialTextColor: const Color(0xFF141E27),
-            dayPeriodBorderSide: const BorderSide(color: Color(0xFFEC407A), width: 1),
+            
+            hourMinuteColor: WidgetStateColor.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return const Color(0xFFEC407A); 
+              }
+              return const Color(0xFFF3F4F6); 
+            }),
+            
+            hourMinuteTextColor: WidgetStateColor.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return Colors.white; 
+              }
+              return const Color(0xFF141E27); 
+            }),
+
+            
             dayPeriodColor: WidgetStateColor.resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
-                return const Color(0xFFEC407A).withValues(alpha: 0.2);
+                return const Color(0xFFEC407A); 
               }
-              return Colors.white;
+              return Colors.white; // Default white background
             }),
-            dayPeriodTextColor: const Color(0xFF141E27),
-            hourMinuteColor: const Color(0xFFF3F4F6),
-            hourMinuteTextColor: const Color(0xFF141E27),
+            
+            
+            dayPeriodTextColor: WidgetStateColor.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return Colors.white; 
+              }
+              return const Color(0xFF141E27); 
+            }),
+            dayPeriodBorderSide: const BorderSide(color: Color(0xFFF3F4F6)),
           ),
           
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFFEC407A),
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              foregroundColor: const Color(0xFFEC407A), 
               textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
-          
-          dialogTheme: const DialogThemeData(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(24)),
+        ),
+        child: Center(
+          child: Transform.scale(
+            scale: 0.9, 
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+              child: child!,
             ),
           ),
-        ),
-        child: MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            viewInsets: EdgeInsets.zero,
-            alwaysUse24HourFormat: false,
-          ),
-          child: child!,
         ),
       );
     },
@@ -973,7 +995,7 @@ Future<void> _selectTime() async {
 
   if (picked != null) {
     setState(() {
-      _selectedTimeOfDay = picked.format(context);
+      _selectedTimeOfDay = picked.format(context); 
     });
   }
 }
@@ -1149,20 +1171,48 @@ Future<void> _selectTime() async {
                                 return Column(
                                   children: [
                                     ListTile(
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                                      title: Text(
-                                        method['name'],style: TextStyle(fontSize: 16, color: textDark, fontWeight: FontWeight.w500),
-                                      ),
-                                      trailing: _selectedPaymentMethod == method['name']  
-                                          ? Icon(Icons.check_circle, color: saveButtonColor, size: 20)
-                                          : null,
-                                      onTap: () {
-                                        setState(() {
-                                          _selectedPaymentMethod = method['name'];
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                    ),
+  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+  title: Text(
+    method['name'],
+    style: TextStyle(fontSize: 16, color: textDark, fontWeight: FontWeight.w500),
+  ),
+  subtitle: GestureDetector(
+    onTap: () {
+      Navigator.pop(context);
+      _showEditPaymentMethodDialog(method['name'], method['balance']);
+    },
+    child: Text(
+      'Balance: Rs ${_formatAmount(method['balance'])}',
+      style: TextStyle(
+        fontSize: 12,
+        color: method['balance'] >= 0 ? Colors.green : Colors.red,
+      ),
+    ),
+  ),
+  trailing: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      IconButton(
+        icon: Icon(Icons.edit, color: saveButtonColor, size: 18),
+        onPressed: () {
+          Navigator.pop(context);
+          _showEditPaymentMethodDialog(method['name'], method['balance']);
+        },
+      ),
+      if (_selectedPaymentMethod == method['name'])
+        Icon(Icons.check_circle, color: saveButtonColor, size: 20)
+      else
+        const SizedBox(width: 40),
+    ],
+  ),
+  onTap: () {
+    setState(() {
+      _selectedPaymentMethod = method['name'];
+      _selectedPaymentMethodBalance = method['balance'];
+    });
+    Navigator.pop(context);
+  },
+),
                                     Divider(height: 1, thickness: 0.5, color: Colors.grey.shade200),
                                   ],
                                 );
@@ -1421,13 +1471,13 @@ _paymentMethodsList.add({
         _savePaymentMethodsToFirestore(); 
         
         // ✅ STEP 6: Show success message with balance
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('"$newName" added with balance: ${_formatAmount(openingBalance)}'),
-            backgroundColor: Colors.green,
-          ),
-        );
-
+       ScaffoldMessenger.of(context).showSnackBar(
+  SnackBar(
+    content: Text('"$newName" payment method created!'),
+    backgroundColor: Colors.green,
+    duration: const Duration(seconds: 2),
+  ),
+);
                     Navigator.pop(context);
                   }
                 }
@@ -1449,6 +1499,118 @@ _paymentMethodsList.add({
   );
 }
 
+void _showEditPaymentMethodDialog(String methodName, double currentBalance) {
+  final TextEditingController balanceController = TextEditingController(
+    text: currentBalance.abs().toString(),
+  );
+  bool isPositive = currentBalance >= 0;
+  
+  showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setDialogState) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Text(
+              'Edit Balance: $methodName',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF141E27)),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Update opening balance', style: TextStyle(color: Colors.grey, fontSize: 14)),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: balanceController,
+                  keyboardType: TextInputType.number,
+                  cursorColor: const Color(0xFFEC407A),
+                  decoration: InputDecoration(
+                    labelText: 'Balance Amount',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFFEC407A), width: 2),
+                    ),
+                    prefixText: 'Rs ',
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => setDialogState(() => isPositive = true),
+                      child: Row(
+                        children: [
+                          Icon(
+                            isPositive ? Icons.radio_button_checked : Icons.radio_button_off,
+                            color: Colors.teal,
+                            size: 26,
+                          ),
+                          const SizedBox(width: 6),
+                          const Text('+', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.teal)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 45),
+                    GestureDetector(
+                      onTap: () => setDialogState(() => isPositive = false),
+                      child: Row(
+                        children: [
+                          Icon(
+                            !isPositive ? Icons.radio_button_checked : Icons.radio_button_off,
+                            color: Colors.red,
+                            size: 26,
+                          ),
+                          const SizedBox(width: 6),
+                          const Text('-', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.red)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('CANCEL', style: TextStyle(color: Color(0xFF6B7280))),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  double newBalance = double.tryParse(balanceController.text) ?? 0;
+                  if (!isPositive) {
+                    newBalance = -newBalance;
+                  }
+                  
+                  int index = _paymentMethodsList.indexWhere(
+                    (method) => method['name'] == methodName
+                  );
+                  if (index != -1) {
+                    setState(() {
+                      _paymentMethodsList[index]['balance'] = newBalance;
+                      if (_selectedPaymentMethod == methodName) {
+                        _selectedPaymentMethodBalance = newBalance;
+                      }
+                    });
+                    _savePaymentMethodsToFirestore();
+                  }
+                  
+                  Navigator.pop(context);
+                  _showSnackBar('Balance updated for $methodName', Colors.green);
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFEC407A)),
+                child: const Text('SAVE', style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
   // Load categories from Firestore
   Future<void> _loadCategoriesFromFirestore() async {
     if (_currentUserId == null) return;
@@ -2215,11 +2377,10 @@ void _showAddNewCategoryFullScreen() {
     try {
       List<String> imageUrls = [];
       if (_billImages.isNotEmpty) {
-        _showSnackBar('Uploading ${_billImages.length} images...', Colors.orange);
+        _showSnackBar('Uploading ${_billImages.length} images...', Colors.red);
         imageUrls = await _uploadBillImages();
       }
 
-      // ========== ✅ YEH CODE ADD KARO (Payment method balance update) ==========
   // Find payment method index
   int index = _paymentMethodsList.indexWhere(
     (method) => method['name'] == _selectedPaymentMethod
@@ -2278,7 +2439,7 @@ void _showAddNewCategoryFullScreen() {
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent, 
-    barrierColor: Colors.black.withValues(alpha: 0.5), // Background ko dim karne ke liye
+    barrierColor: Colors.black.withValues(alpha: 0.5),
     builder: (context) {
       
       return Container(
@@ -3090,4 +3251,3 @@ class _CalculatorBottomSheetState extends State<_CalculatorBottomSheet> {
     );
   }
 }
-
